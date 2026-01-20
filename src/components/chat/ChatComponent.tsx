@@ -28,7 +28,7 @@ export const ChatContainer = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="flex flex-col h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
+      className="flex flex-col h-screen bg-linear-to-br from-slate-900 via-slate-800 to-slate-900"
     >
       {/* Header */}
       <ChatHeader

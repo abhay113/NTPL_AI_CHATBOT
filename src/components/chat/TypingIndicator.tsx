@@ -13,7 +13,7 @@ export const TypingIndicator = () => {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
-      className="flex items-center gap-2 px-4 py-3 bg-slate-700/50 rounded-2xl rounded-bl-md max-w-[80px]"
+      className="flex items-center gap-2 px-4 py-3 bg-slate-700/50 rounded-2xl rounded-bl-md max-w-20"
     >
       {/* Three animated dots */}
       {[0, 1, 2].map((index) => (

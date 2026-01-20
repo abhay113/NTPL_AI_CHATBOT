@@ -17,7 +17,6 @@ export const useChat = () => {
 
   // Refs for managing streaming
   const abortControllerRef = useRef<AbortController | null>(null);
-  const currentStreamingMessageRef = useRef<string>("");
 
   /**
    * Initialize connection status
@@ -69,14 +68,18 @@ export const useChat = () => {
 
       // Create abort controller for this request
       abortControllerRef.current = new AbortController();
-      currentStreamingMessageRef.current = "";
+
+      // Use a local variable to accumulate content
+      let accumulatedContent = "";
 
       try {
         // Prepare history for context (last 10 messages)
         const history = messages.slice(-10).map((msg) => ({
           role: msg.role === "user" ? "user" : "model",
-          parts: msg.content,
+          parts: [{ text: msg.content }],
         }));
+
+        console.log("📤 Sending request...");
 
         // Call the API endpoint
         const response = await fetch("/api/chat", {
@@ -103,11 +106,16 @@ export const useChat = () => {
           throw new Error("No reader available");
         }
 
+        console.log("📥 Starting to read stream...");
+
         // Process the stream
         while (true) {
           const { done, value } = await reader.read();
 
-          if (done) break;
+          if (done) {
+            console.log("✅ Stream reading complete");
+            break;
+          }
 
           // Decode the chunk
           const chunk = decoder.decode(value, { stream: true });
@@ -118,10 +126,16 @@ export const useChat = () => {
             if (line.startsWith("data: ")) {
               try {
                 const data = JSON.parse(line.slice(6));
+                console.log("📦 Received:", data);
 
                 if (data.type === "content") {
-                  // Append text to streaming message
-                  currentStreamingMessageRef.current += data.text;
+                  // Accumulate content
+                  accumulatedContent += data.text;
+                  console.log(
+                    "💬 Accumulated:",
+                    accumulatedContent.length,
+                    "chars",
+                  );
 
                   // Update the AI message with new content
                   setMessages((prev) =>
@@ -129,36 +143,46 @@ export const useChat = () => {
                       msg.id === aiMessageId
                         ? {
                             ...msg,
-                            content: currentStreamingMessageRef.current,
+                            content: accumulatedContent,
+                            isStreaming: true,
                           }
                         : msg,
                     ),
                   );
                 } else if (data.type === "done") {
-                  // Streaming complete
+                  console.log(
+                    "🏁 Stream done, final content length:",
+                    accumulatedContent.length,
+                  );
+
+                  // Mark streaming as complete
                   setMessages((prev) =>
                     prev.map((msg) =>
                       msg.id === aiMessageId
-                        ? { ...msg, isStreaming: false }
+                        ? {
+                            ...msg,
+                            content: accumulatedContent,
+                            isStreaming: false,
+                          }
                         : msg,
                     ),
                   );
                 } else if (data.type === "error") {
-                  console.error("Streaming error:", data.message);
+                  console.error("❌ Streaming error:", data.message);
                   throw new Error(data.message);
                 }
               } catch (e) {
-                console.error("Parse error:", e);
+                console.error("⚠️ Parse error:", e, "Line:", line);
               }
             }
           }
         }
       } catch (error: unknown) {
-        console.error("Send message error:", error);
+        console.error("💥 Send message error:", error);
 
         // Handle abort
         if (error instanceof Error && error.name === "AbortError") {
-          console.log("Request aborted");
+          console.log("🛑 Request aborted");
           return;
         }
 
@@ -181,7 +205,6 @@ export const useChat = () => {
         setTimeout(() => setConnectionStatus("connected"), 3000);
       } finally {
         setIsLoading(false);
-        currentStreamingMessageRef.current = "";
         abortControllerRef.current = null;
       }
     },

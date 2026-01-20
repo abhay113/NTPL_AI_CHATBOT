@@ -1,10 +1,10 @@
-// src/components/chat/Message.tsx
-
 "use client";
 
 import { motion } from "framer-motion";
 import { format } from "date-fns";
 import { User, Bot } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { MessageProps } from "@/types/chat";
 
 /**
@@ -53,8 +53,10 @@ export const Message = ({ message, isLatest }: MessageProps) => {
             }
           `}
         >
-          <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">
-            {message.content}
+          <div className="text-sm leading-relaxed whitespace-pre-wrap break-words prose prose-invert max-w-none">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {message.content}
+            </ReactMarkdown>
 
             {/* Streaming cursor */}
             {message.isStreaming && (
@@ -64,7 +66,7 @@ export const Message = ({ message, isLatest }: MessageProps) => {
                 className="inline-block w-1 h-4 ml-1 bg-current align-middle"
               />
             )}
-          </p>
+          </div>
         </div>
 
         {/* Timestamp */}
@@ -75,3 +77,5 @@ export const Message = ({ message, isLatest }: MessageProps) => {
     </motion.div>
   );
 };
+
+

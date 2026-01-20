@@ -23,7 +23,7 @@ export const getGeminiModel = () => {
   return genAI.getGenerativeModel({
     model: "gemini-flash-latest",
     generationConfig: {
-      temperature: 0.9, // Controls randomness (0-1, higher = more creative)
+      temperature: 0.7, // Controls randomness (0-1, higher = more creative)
       topK: 1, // Number of highest probability tokens to consider
       topP: 1, // Cumulative probability threshold
       maxOutputTokens: 2048, // Maximum length of response

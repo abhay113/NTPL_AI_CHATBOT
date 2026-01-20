@@ -75,7 +75,7 @@ export const ChatInput = ({
               placeholder={
                 disabled
                   ? "Waiting for connection..."
-                  : "Type your message... (Shift+Enter for new line)"
+                  : "Ask anything"
               }
               disabled={disabled}
               rows={1}

@@ -50,6 +50,8 @@ export const ConnectionStatus = ({ status }: ConnectionStatusProps) => {
   const config = statusConfig[status];
   const Icon = config.icon;
 
+  const isAnimating = status === "connecting" || status === "reconnecting";
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
@@ -59,16 +61,16 @@ export const ConnectionStatus = ({ status }: ConnectionStatusProps) => {
         ${config.bgColor} ${config.borderColor}
       `}
     >
-      <motion.div
-        animate={
-          status === "connecting" || status === "reconnecting"
-            ? { rotate: 360 }
-            : {}
-        }
-        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-      >
+      {isAnimating ? (
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+        >
+          <Icon className={`w-4 h-4 ${config.color}`} />
+        </motion.div>
+      ) : (
         <Icon className={`w-4 h-4 ${config.color}`} />
-      </motion.div>
+      )}
       <span className={`text-xs font-medium ${config.color}`}>
         {config.text}
       </span>

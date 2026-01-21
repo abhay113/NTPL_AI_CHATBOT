@@ -65,7 +65,7 @@ export const ChatInput = ({
       className="bg-slate-800/80 backdrop-blur-xl border-t border-slate-700/50 px-6 py-4"
     >
       <div className="max-w-4xl mx-auto">
-        <div className="flex gap-3 items-end">
+        <div className="flex gap-3 items-center">
           {/* Text input area */}
           <div className="flex-1 relative">
             <textarea
@@ -98,7 +98,7 @@ export const ChatInput = ({
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 className={`
-                  absolute right-16 bottom-3 text-xs font-medium
+                  absolute right-9 bottom-3 text-xs font-medium
                   ${isNearLimit ? "text-orange-400" : "text-slate-400"}
                 `}
               >

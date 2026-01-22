@@ -123,8 +123,8 @@ ai-chatbot/
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/ai-chatbot.git
-   cd ai-chatbot
+   git clone https://github.com/abhay113/NTPL_AI_CHATBOT.git
+   cd NTPL_AI_CHATBOT
    ```
 
 2. **Install dependencies**

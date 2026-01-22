@@ -62,34 +62,31 @@ export const ChatInput = ({
     <motion.div
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="bg-slate-800/80 backdrop-blur-xl border-t border-slate-700/50 px-6 py-4"
+      className="bg-slate-800/80 backdrop-blur-xl border-t border-slate-700/50 px-6 pt-4"
+      style={{
+        paddingBottom: "max(1rem, env(safe-area-inset-bottom))",
+      }}
     >
       <div className="max-w-4xl mx-auto">
         <div className="flex gap-3 items-center">
           {/* Text input area */}
-          <div className="flex-1 relative">
+          <div className="flex-1 relative ">
             <textarea
               value={input}
               onChange={handleInput}
               onKeyPress={handleKeyPress}
               placeholder={
-                disabled
-                  ? "Waiting for connection..."
-                  : "Ask anything"
+                disabled ? "Waiting for connection..." : "Ask anything"
               }
               disabled={disabled}
               rows={1}
               className="
-                w-full bg-slate-700/50 text-white placeholder-slate-400
+                w-full h-full bg-slate-700/50 text-white placeholder-slate-400
                 rounded-2xl px-4 py-3 pr-20 resize-none
                 focus:outline-none focus:ring-2 focus:ring-blue-500/50
                 disabled:opacity-50 disabled:cursor-not-allowed
                 transition-all duration-200
               "
-              style={{
-                minHeight: "52px",
-                maxHeight: "150px",
-              }}
             />
 
             {/* Character counter */}
@@ -132,17 +129,6 @@ export const ChatInput = ({
             )}
           </motion.button>
         </div>
-
-        {/* Helper text */}
-        {!disabled && (
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-xs text-slate-500 mt-2 text-center"
-          >
-            Press Enter to send • Shift+Enter for new line
-          </motion.p>
-        )}
       </div>
     </motion.div>
   );

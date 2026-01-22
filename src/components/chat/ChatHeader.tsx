@@ -36,7 +36,6 @@ export const ChatHeader = ({
           </div>
           <div>
             <h1 className="text-xl font-bold text-white">AI Chat Assistant</h1>
-            <p className="text-sm text-slate-400">Powered by Google Gemini</p>
           </div>
         </div>
 

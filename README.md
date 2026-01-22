@@ -4,6 +4,8 @@ A modern, real-time AI chatbot built with **Next.js 16**, **React 19**, and **Go
 
 🌐 **Live Demo:** [https://ntpl-ai-chatbot.vercel.app/](https://ntpl-ai-chatbot.vercel.app/)
 
+🎬 **Video Link:** [https://drive.google.com/file/d/1E_ExDZCTj6ytkfyOgaFQXC44-gRgMwEj/view?usp=sharing](https://drive.google.com/file/d/1E_ExDZCTj6ytkfyOgaFQXC44-gRgMwEj/view?usp=sharing)
+
 ![Next.js](https://img.shields.io/badge/Next.js-16.1.3-black?logo=next.js)
 ![React](https://img.shields.io/badge/React-19.2.3-blue?logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?logo=typescript)
